@@ -5,7 +5,7 @@
 
 void MathEngine::clear() {
   m_left = "0";
-  m_right = "0";
+  m_right = "";
   m_operation = "";
 
   m_leftDigitStarted = false;
@@ -56,7 +56,7 @@ void MathEngine::resolve() {
 
   m_left = QString::number(result, 'f',
                            5); // arbitrary precision up to 5 decimal places
-  m_right = "0";
+  m_right = "";
   m_operation = "";
   m_leftDigitStarted = false;
   m_rightDigitStarted = false;

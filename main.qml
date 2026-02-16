@@ -33,7 +33,7 @@ Window {
             font.pixelSize: 24
             text: {
                 var operation = MathEngine.operationValue == "" ? "" : MathEngine.operationValue;
-                var right = MathEngine.rightValue == "0" ? "" : MathEngine.rightValue;
+                var right = MathEngine.rightValue == "" ? "" : MathEngine.rightValue;
                 return MathEngine.leftValue + " " + operation + " " + right;
             }
             color: "#FFFFFF"

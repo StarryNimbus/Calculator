@@ -39,7 +39,7 @@ private:
   bool hasOperator() const;
 
   QString m_left{"0"};
-  QString m_right{"0"};
+  QString m_right{""};
   QString m_operation{""};
 
   // These variables are purely for this class to track whether the left or
