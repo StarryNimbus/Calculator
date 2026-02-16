@@ -36,7 +36,7 @@ signals:
   void operationChanged();
 
 private:
-  bool hasOperator() const;
+  [[nodiscard]] bool hasOperator() const;
 
   QString m_left{"0"};
   QString m_right{""};
