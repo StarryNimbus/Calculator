@@ -14,7 +14,7 @@ int main(int argc, char *argv[]) {
 
   QQmlApplicationEngine engine;
   engine.addImportPath("qrc:/");
-  engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+  engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
   if (engine.rootObjects().isEmpty()) {
     return 1;
   }
