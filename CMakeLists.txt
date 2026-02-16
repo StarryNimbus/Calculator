@@ -18,12 +18,13 @@ foreach(PACKAGE ${QT_PACKAGES})
   list(APPEND QT_LIBRARIES Qt6::${PACKAGE})
 endforeach()
 
-qt_add_resources(QT_RESOURCES ${CMAKE_CURRENT_LIST_DIR}/resources.qrc)
+qt_add_resources(QT_RESOURCES ${CMAKE_CURRENT_LIST_DIR}/qml/resources.qrc)
 
-file(GLOB SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/*.cpp")
-file(GLOB HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/*.h")
+file(GLOB SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/src/*.cpp")
+file(GLOB HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_LIST_DIR}/inc/*.h")
 
 add_executable(Calculator ${SOURCES} ${HEADERS} ${QT_RESOURCES})
+target_include_directories(Calculator PRIVATE ${CMAKE_CURRENT_LIST_DIR}/inc)
 target_compile_options(Calculator PRIVATE ${QT_COMPILE_OPTIONS} --std=gnu++17 -O1 -Wall -Wextra)
 target_compile_definitions(Calculator PRIVATE ${QT_COMPILE_DEFINITIONS})
 target_link_libraries(Calculator PRIVATE ${QT_LIBRARIES})
