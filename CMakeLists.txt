@@ -8,6 +8,7 @@ set(QT_PACKAGES
   Core
   Quick
   QuickControls2
+  Test
 )
 
 find_package(Qt6 6.4 REQUIRED COMPONENTS ${QT_PACKAGES})

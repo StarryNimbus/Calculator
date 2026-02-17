@@ -16,6 +16,7 @@ target_link_libraries(example_test
   PRIVATE
     GTest::gtest_main
     math_engine
+    Qt6::Test
 )
 
 include(GoogleTest)
