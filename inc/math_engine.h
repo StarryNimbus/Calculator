@@ -26,9 +26,13 @@ public:
   QString getOperationValue() const { return m_operation; }
 
   Q_INVOKABLE void clear();
-  Q_INVOKABLE void resolve();
-  Q_INVOKABLE void inputDigit(const QString &val);
-  Q_INVOKABLE void setOperation(const QString &val);
+  Q_INVOKABLE bool resolve();
+  Q_INVOKABLE bool inputDigit(const QString &val);
+  Q_INVOKABLE bool setOperation(const QString &val);
+
+  // For testing purposes
+  bool isLeftDigitStarted() const { return m_leftDigitStarted; }
+  bool isRightDigitStarted() const { return m_rightDigitStarted; }
 
 signals:
   void leftValueChanged();

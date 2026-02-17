@@ -16,13 +16,13 @@ void MathEngine::clear() {
   emit operationChanged();
 }
 
-void MathEngine::resolve() {
+bool MathEngine::resolve() {
   // Check if val is a valid operation
   if (m_validOperations.find(m_operation) == m_validOperations.end()) {
     std::cerr << "Invalid operation: " << m_operation.toStdString()
               << std::endl;
     std::cerr << "Nothing to resolve" << std::endl;
-    return;
+    return false;
   }
 
   double result = 0;
@@ -43,17 +43,13 @@ void MathEngine::resolve() {
       // Current behavior is to reset and early return
       std::cerr << "Division by zero" << std::endl;
       clear();
-      return;
+      return false;
     }
     result = leftOperand / rightOperand;
-  } else {
-    // Ideally, this should never happen because we check for valid operations
-    std::cerr << "Invalid operation: " << m_operation.toStdString()
-              << std::endl;
-    clear();
-    return;
   }
 
+  // Possible improvement: use QString::number to format, then remove trailing
+  // zeros and unnecessary decimal point.
   m_left = QString::number(result, 'f',
                            5); // arbitrary precision up to 5 decimal places
   m_right = "";
@@ -64,14 +60,15 @@ void MathEngine::resolve() {
   emit leftValueChanged();
   emit rightValueChanged();
   emit operationChanged();
+  return true;
 }
 
-void MathEngine::inputDigit(const QString &val) {
+bool MathEngine::inputDigit(const QString &val) {
   // Validate the input digit or decimal point
   if (m_validDigits.find(val) == m_validDigits.end()) {
     std::cerr << "Invalid digit or decimal point: " << val.toStdString()
               << std::endl;
-    return;
+    return false;
   }
 
   // Determine which operand to update
@@ -85,7 +82,7 @@ void MathEngine::inputDigit(const QString &val) {
   // Only allow a single decimal point
   if (val == "." && current.contains(".")) {
     std::cerr << "Multiple decimal points" << std::endl;
-    return;
+    return false;
   }
 
   // If not entered yet, start with "0" if input is ".", otherwise with val
@@ -99,26 +96,27 @@ void MathEngine::inputDigit(const QString &val) {
       current = val;
     }
     valueChanged();
-    return;
+    return true;
   }
 
   // Prevent weird numbers like "00" or "05"
   if (current == "0" && val != ".") {
     current = val; // Example: "00" becomes "0" and "05" becomes "5")
     valueChanged();
-    return;
+    return true;
   }
 
   // Usual case: append digit/decimal
   current += val;
   valueChanged();
+  return true;
 }
 
-void MathEngine::setOperation(const QString &val) {
+bool MathEngine::setOperation(const QString &val) {
   // Check if val is a valid operation
   if (m_validOperations.find(val) == m_validOperations.end()) {
     std::cerr << "Invalid operation: " << val.toStdString() << std::endl;
-    return;
+    return false;
   }
 
   // Following requirement; chaining operations should work as it typically does
@@ -130,6 +128,7 @@ void MathEngine::setOperation(const QString &val) {
 
   m_operation = val;
   emit operationChanged();
+  return true;
 }
 
 bool MathEngine::hasOperator() const { return !m_operation.isEmpty(); }
